@@ -3,7 +3,7 @@ const knex = require('knex')
 const app = require('../src/app')
 const { expect } = require('chai')
 
-describe.only('user services', ()=> {
+describe('user services', ()=> {
     let db
 
     const testData = [
@@ -71,7 +71,7 @@ describe.only('user services', ()=> {
     before('make knex instance', () => {
         db = knex({
           client: 'pg',
-          connection: process.env.TEST_DB_URL,
+          connection: process.env.TEST_DATABASE_URL,
         })
         app.set('db', db)
       })
@@ -107,7 +107,7 @@ describe.only('user services', ()=> {
                 .insert(createTestPurse())
         })
 
-        it('gets user by user email and password', ()=>{
+        it('gets user by id', ()=>{
             userService.getUser(db, 'me@gmail.com', 'password')
                 .then(result =>{
                     console.log(result)
@@ -123,22 +123,51 @@ describe.only('user services', ()=> {
                 .catch()
         })
 
-        it.only('inserts a new user', ()=>{
+        it('inserts a new user', ()=>{
             const newUser = {
-                id: 5,
+                id: '5847999',
                 user_name: 'gina',
                 user_email: 'test@gmail.com',
                 password: 'password',
-                wins: 0,
-                total_games: 0,
-                correct: 0
             };
             newDB = [...testData, newUser]
             userService.insertUser(db, newUser)
-            .then(result =>{
-                console.log(result)
-            })
-            .catch()
+                .then(result=>{
+                    console.log(result)
+                })
+        })
+
+        it('updates user', ()=>{
+            const newUser = {
+                id: "1",
+                user_name: "Me",
+                user_email: "me@gmail.com",
+                password: "password",
+                wins: 20,
+                total_games: 30,
+                correct: 25,
+            };
+            userService.updateUser(db, newUser)
+                .then(result =>  {
+                    console.log(result)
+                })
+        })
+
+        it('deletes user', ()=>{
+            const newUser = {
+                id: "1",
+                user_name: "Me",
+                user_email: "me@gmail.com",
+                password: "password",
+                wins: 20,
+                total_games: 30,
+                correct: 25,
+            };
+
+            userService.deleteUser(db, newUser.id)
+                .then(result =>{
+                    console.log('deleted user')
+                })
         })
     })
 })

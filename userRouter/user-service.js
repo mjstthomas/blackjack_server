@@ -15,32 +15,32 @@ const userService = {
             })
             .first()
     },
-    insertUser(db, newUser) {
-        const {user_name, user_email, password, id} = newUser;
-        const insertedUser = {user_email,user_name, password, id}
-        return db
-        .insert(insertedUser)
-        .into('users')
-        .returning('*')
-        .then(([user]) => user)
-        .then(user =>{
-            userService.getUser(db, `${user.user_email}`, `${user.password}`)
+    insertUser(knex, newUser) {
+        return knex.transaction(async tx => {
+                const user =await tx.insert(newUser).into('users').returning('*')
+                const user_purse = await tx.insert({id: newUser.id}).into('user_purse').returning('*')
+                return {
+                    ...user,
+                    ...user_purse
+                }
         })
-        // .then(()=>{
-        //     db
-        //     .insert(insertedUser.id)
-        //     .into('user_purse')
-        // })
-        // .then(()=>{
-        //     this.getAllUsers(db)
-        // })
+    
     },
 
-    patchUser(knex, id){
-        return knex
-            .from('user_purse')
-            .where({id})
+    updateUser(db, user){
+        const {wins, total_games, correct } = user;
+        const purse = {wins, total_games, correct };
+        return db('user_purse')
+            .where({id: user.id})
+            .update(purse)
+            .returning('*')
+    },
 
+    deleteUser(db, id){
+        return db('users')
+            .where({id: id})
+            .delete()
+            .returning('*')
     }
 }
 
