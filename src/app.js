@@ -26,6 +26,9 @@ app.use(LeaderBoardRouter)
 
 app.use('/api', tableRouter)
 
+app.get('/', (req, res)=>{
+	res.send('Hello, boilerplate!')
+})
 
 app.use(function errorHandler(error, req, res, next) {
    let response
