@@ -29,7 +29,6 @@ userRouter
             req.app.get('db'),
             loginUser.user_email, loginUser.password
           )
-            console.log(thing)
           if (!thing)
             userService.insertUser(req.app.get('db'), loginUser)
             .then(newResult =>{
@@ -46,7 +45,6 @@ userRouter
       .patch(jsonParser, (req, res, next)=>{
           const { id, wins, total_games, correct } = req.body
           const userStats = { id, wins, total_games, correct }
-        console.log(userStats)
           userService.updateUser(req.app.get('db'), userStats)
             .then(result =>{
                 return res.json({message: 'user updated'})

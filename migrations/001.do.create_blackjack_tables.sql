@@ -8,6 +8,7 @@ create table users (
 
 create table user_purse (
     id text references users(id) on delete cascade not null,
+    user_image text default 'goku',
     wins integer default 0,
     total_games integer default 0,
     correct integer default 0

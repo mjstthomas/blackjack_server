@@ -28,8 +28,8 @@ const userService = {
     },
 
     updateUser(db, user){
-        const {wins, total_games, correct } = user;
-        const purse = {wins, total_games, correct };
+        const {wins, total_games, correct, user_image} = user;
+        const purse = {wins, total_games, correct, user_image };
         return db('user_purse')
             .where({id: user.id})
             .update(purse)
