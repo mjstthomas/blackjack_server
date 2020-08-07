@@ -43,8 +43,8 @@ userRouter
 userRouter
       .route('/api/user')
       .patch(jsonParser, (req, res, next)=>{
-          const { id, wins, total_games, correct } = req.body
-          const userStats = { id, wins, total_games, correct }
+          const { id, wins, total_games, correct, user_image } = req.body
+          const userStats = { id, wins, total_games, correct, user_image }
           userService.updateUser(req.app.get('db'), userStats)
             .then(result =>{
                 return res.json({message: 'user updated'})
