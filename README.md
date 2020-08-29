@@ -1,26 +1,17 @@
-# Express Boilerplate!
+# Battle Blackjack API Server
 
-This is a boilerplate project used for starting new projects!
+## Technologies
 
-## Set up
+1. Node.js
+2. Knex
+3. Express
+4. Postgres
+5. SQL
 
-Complete the following steps to start a new project (NEW-PROJECT-NAME):
-
-1. Clone this repository to your local machine `git clone BOILERPLATE-URL NEW-PROJECTS-NAME`
-2. `cd` into the cloned repository
-3. Make a fresh start of the git history for this project with `rm -rf .git && git init`
-4. Install the node dependencies `npm install`
-5. Move the example Environment file to `.env` that will be ignored by git and read by the express server `mv example.env .env`
-6. Edit the contents of the `package.json` to use NEW-PROJECT-NAME instead of `"name": "express-boilerplate",`
-
-## Scripts
-
-Start the application `npm start`
-
-Start nodemon for the application `npm run dev`
-
-Run the tests `npm test`
-
-## Deploying
-
-When your new project is ready for deployment, add a new Heroku application with `heroku create`. This will make a new git remote called "heroku" and you can then `npm run deploy` which will push to this remote's master branch.
+## Explanations of Routes
+Using Node and Express I created an API using the express.route() method that allowed for the client to interact with my Postgresql database.
+My users route would take the given information from the get request, check it against the postgres users table, it would find the user, join it with the user_purse that shared the same ID, and send it back.  
+If it didn't find the user, it would create one and send it.
+My user route was used to  patch wins, total_games, and the string assigned to the users character.
+It would also allow the user to delete itself.
+My leaderBoard route would get all the users and send it back to sort on the client side.
