@@ -35,6 +35,7 @@ userRouter
                 const user = {
                     ...loginUser,
                     wins: 0,
+                    user_image: 'goku',
                     total_games: 0,
                     correct: 0
                 }
