@@ -31,9 +31,6 @@ userRouter
           )
           if (!thing)
             userService.insertUser(req.app.get('db'), loginUser)
-            .then(newResult =>{
-                return res.json({message: 'user successfully created'})
-            })
             next()
         } catch (error) {
           next(error)
