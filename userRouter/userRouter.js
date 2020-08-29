@@ -29,9 +29,18 @@ userRouter
             req.app.get('db'),
             loginUser.user_email, loginUser.password
           )
-          if (!thing)
+          if (!thing){
             userService.insertUser(req.app.get('db'), loginUser)
-            next()
+            .then( result => {
+                const user = {
+                    ...loginUser,
+                    wins: 0,
+                    total_games: 0,
+                    correct: 0
+                }
+                return res.json(user)
+            })
+          }
         } catch (error) {
           next(error)
         }
