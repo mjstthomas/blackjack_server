@@ -1,9 +1,9 @@
 const express = require('express');
-const xss = require('xss')
-const userService = require('./user-service')
+const xss = require('xss');
+const userService = require('./user-service');
 
-const userRouter = express.Router()
-const jsonParser = express.json()
+const userRouter = express.Router();
+const jsonParser = express.json();
 
 userRouter
     .route('/api/users/:user')
@@ -15,7 +15,7 @@ userRouter
                 res.json(result)
             })
             .catch(next)
-    })
+    });
     async function checkUserExists(req, res, next) {
         try {
             const loginUserArray = req.params.user.split(':')
@@ -38,14 +38,14 @@ userRouter
                     user_image: 'goku',
                     total_games: 0,
                     correct: 0
-                }
+                };
                 return res.json(user)
-            })
+            });
           }
         } catch (error) {
-          next(error)
-        }
-      }
+          next(error);
+        };
+      };
 
 userRouter
       .route('/api/user')
@@ -56,7 +56,7 @@ userRouter
             .then(result =>{
                 return res.json({message: 'user updated'})
             })
-            .catch(next)
+            .catch(next);
       })
       .delete(jsonParser, (req, res, next) =>{
         const { id, wins, total_games, correct } = req.body
@@ -67,5 +67,5 @@ userRouter
                 res.json({message: 'user deleted'})
             })
             .catch(next)
-    })
+    });
     module.exports = userRouter;

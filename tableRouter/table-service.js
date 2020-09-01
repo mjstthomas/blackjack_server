@@ -10,6 +10,6 @@ const tableService = {
             .from('blackjack_strategy')
             .where({id})
     }
-}
+};
 
-module.exports = tableService
+module.exports = tableService;

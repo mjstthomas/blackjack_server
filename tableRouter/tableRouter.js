@@ -11,7 +11,7 @@ tableRouter
             return res.status(200).json(result)
         })
         .catch(next)
-    })
+    });
 tableRouter
     .route('/strategy/:tableId')
     .get((req, res, next)=>{
@@ -24,6 +24,6 @@ tableRouter
                 return res.status(200).json(folders)
             })
         .catch(next)
-    })
+    });
 
-module.exports = tableRouter
+module.exports = tableRouter;

@@ -1,6 +1,6 @@
-const knex = require('knex')
-const app = require('../src/app')
-const supertest = require('supertest')
+const knex = require('knex');
+const app = require('../src/app');
+const supertest = require('supertest');
 
 describe.only('userRouter endpoints', ()=>{
     let db;
@@ -42,7 +42,7 @@ describe.only('userRouter endpoints', ()=>{
             total_games: 901,
             correct: 1,
         }
-    ]
+    ];
       function createTestUsers(){
         let testUsers = []
 
@@ -52,15 +52,15 @@ describe.only('userRouter endpoints', ()=>{
                 user_name: user.user_name,
                 user_email: user.user_email,
                 password: user.password
-            }
+            };
             testUsers.push(testUser)
-        })
+        });
 
         return testUsers
-    }
+    };
 
     function createTestPurse(){
-        let testPurse = []
+        let testPurse = [];
 
         testData.forEach(user =>{
             const userPurse = {
@@ -68,13 +68,13 @@ describe.only('userRouter endpoints', ()=>{
                 wins: user.wins,
                 total_games: user.total_games,
                 correct: user.correct,
-            }
+            };
             testPurse.push(userPurse)
-        })
+        });
 
         return testPurse
-    }
-      after('disconnect from db', () => db.destroy())
+    };
+      after('disconnect from db', () => db.destroy());
 
       before('cleanup', () => {
         return db.transaction(trx =>
@@ -84,7 +84,7 @@ describe.only('userRouter endpoints', ()=>{
                 user_purse
                 RESTART IDENTITY CASCADE`
             ))
-      })
+      });
     
       afterEach('cleanup', () => {
         return db.transaction(trx =>
@@ -94,38 +94,38 @@ describe.only('userRouter endpoints', ()=>{
                 user_purse
                 RESTART IDENTITY CASCADE`
             ))
-      })
+      });
 
 
         beforeEach('inserts users', ()=>{
             return db
                 .into('users')
                 .insert(createTestUsers())
-        })
+        });
         beforeEach('inserts purse', ()=>{
             return db
                 .into('user_purse')
                 .insert(createTestPurse())
-        })
+        });
         context('/api/users', ()=>{
             it.only('responds with 200 and user when email and password are correct', ()=>{
                 const user = 'me@gmail.com:password:Me';
                 return supertest(app)
                     .get(`/api/users/${user}`)
                     .expect(200, testData[0])
-            })
+            });
 
             it('adds a new user when email and password are not correct', ()=>{
                 const user = 'brit@gmail.com:password:Brittany';
                 return supertest(app)
                     .get(`/api/users/${user}`)
                     .expect(200, {message: 'user successfully created'})
-            })
+            });
             it('deletes user', ()=>{
                 const user = 'me@gmail.com:password:Me';
                 return supertest(app)
                     .delete(`/api/users/${user}`)
                     .expect({message: 'user deleted'})
-            })
-        })
-})
+            });
+        });
+});

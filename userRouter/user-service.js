@@ -42,6 +42,6 @@ const userService = {
             .delete()
             .returning('*')
     }
-}
+};
 
-module.exports = userService
+module.exports = userService;

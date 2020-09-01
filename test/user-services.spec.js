@@ -53,7 +53,7 @@ describe('user services', ()=> {
     }
 
     function createTestPurse(){
-        let testPurse = []
+        let testPurse = [];
 
         testData.forEach(user =>{
             const userPurse = {
@@ -61,20 +61,20 @@ describe('user services', ()=> {
                 wins: user.wins,
                 total_games: user.total_games,
                 correct: user.correct,
-            }
-            testPurse.push(userPurse)
-        })
+            };
+            testPurse.push(userPurse);
+        });
 
-        return testPurse
-    }
+        return testPurse;
+    };
 
     before('make knex instance', () => {
         db = knex({
           client: 'pg',
           connection: process.env.TEST_DATABASE_URL,
-        })
+        });
         app.set('db', db)
-      })
+      });
     before('delete users', ()=> {
         return db.transaction(trx =>
             trx.raw(
@@ -82,8 +82,8 @@ describe('user services', ()=> {
                 users,
                 user_purse
                 RESTART IDENTITY CASCADE`
-            ))
-    })
+            ));
+    });
     afterEach('delete users', ()=> {
         return db.transaction(trx =>
             trx.raw(
@@ -91,21 +91,21 @@ describe('user services', ()=> {
                 users,
                 user_purse
                 RESTART IDENTITY CASCADE`
-            ))
-    })
-    after('disconnect', ()=> db.destroy())
+            ));
+    });
+    after('disconnect', ()=> db.destroy());
 
     context('user Services', ()=>{
         beforeEach('inserts users', ()=>{
             return db
                 .into('users')
                 .insert(createTestUsers())
-        })
+        });
         beforeEach('inserts purse', ()=>{
             return db
                 .into('user_purse')
                 .insert(createTestPurse())
-        })
+        });
 
         it('gets user by id', ()=>{
             userService.getUser(db, 'me@gmail.com', 'password')
@@ -114,14 +114,14 @@ describe('user services', ()=> {
                     expect(result).to.eql(testData[0])
                 })
                 .catch()
-        })
+        });
         it('gets all users', ()=>{
             userService.getAllUsers(db)
                 .then(result =>{
                     expect(result).to.eql(testData)
                 })
                 .catch()
-        })
+        });
 
         it('inserts a new user', ()=>{
             const newUser = {
@@ -135,7 +135,7 @@ describe('user services', ()=> {
                 .then(result=>{
                     console.log(result)
                 })
-        })
+        });
 
         it('updates user', ()=>{
             const newUser = {
@@ -150,8 +150,8 @@ describe('user services', ()=> {
             userService.updateUser(db, newUser)
                 .then(result =>  {
                     console.log(result)
-                })
-        })
+                });
+        });
 
         it('deletes user', ()=>{
             const newUser = {
@@ -167,7 +167,7 @@ describe('user services', ()=> {
             userService.deleteUser(db, newUser.id)
                 .then(result =>{
                     console.log('deleted user')
-                })
-        })
-    })
-})
+                });
+        });
+    });
+});
