@@ -65,3 +65,6 @@ It would also allow the user to delete itself.
 
 #### Route /api/leaderboard
 My leaderBoard route would get all the users and send it back to sort on the client side.
+
+### Route /api/strategy
+Though never used in actual production app, was originally used to pull specific hit/stay info using users hand value in the get request.  In the end, heroku server didn't have the speed required for the game to remain seemless and since the board was static, it was easier to create it as a file in the app and pull directily from that file.
