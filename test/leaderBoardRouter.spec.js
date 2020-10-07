@@ -2,7 +2,7 @@ const knex = require("knex");
 const app = require("../src/app");
 const supertest = require("supertest");
 
-describe("userRouter endpoints", () => {
+describe("leaderBoardRouter endpoints", () => {
   let db;
 
   before("make knex instance", () => {
@@ -103,23 +103,11 @@ describe("userRouter endpoints", () => {
   beforeEach("inserts purse", () => {
     return db.into("user_purse").insert(createTestPurse());
   });
-  context("/api/users", () => {
-    it("responds with 200 and user when email and password are correct", () => {
-      const user = "me@gmail.com:password:Me";
-      return supertest(app).get(`/api/users/${user}`).expect(200, testData[0]);
+  context("/api/leaderboard", () => {
+    it("responds with all users", () => {
+      const users = [...testData]
+      return supertest(app).get(`/api/LeaderBoard/`).expect(200, testData);
     });
 
-    it("adds a new user when email and password are not correct", () => {
-      const user = "brit@gmail.com:password:Brittany";
-      return supertest(app)
-        .get(`/api/users/${user}`)
-        .expect(200, { message: "user successfully created" });
-    });
-    it("deletes user", () => {
-      const user = "me@gmail.com:password:Me";
-      return supertest(app)
-        .delete(`/api/users/${user}`)
-        .expect({ message: "user deleted" });
-    });
   });
 });
